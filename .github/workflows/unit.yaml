@@ -27,14 +27,16 @@ jobs:
 
           echo "::set-output name=coverage::$coverage"
 
-      - name: Auto Comment
-        uses: actions/github-script@v5
+      - name: Create pull-request against master
+        uses: octokit/request-action@v2.x
+        if: github.event_name == 'push'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
-          script: |
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: ${{ steps.coverage.outputs.coverage }}
-            })
+          route: POST /repos/:repository/pulls
+          repository: ${{ github.repository }}
+          title: Merge ght/master into master
+          head: ght/master
+          base: master
+          body: |
+            Coverage: ${{ steps.coverage.outputs.coverage }}
