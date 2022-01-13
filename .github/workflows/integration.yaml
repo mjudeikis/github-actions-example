@@ -20,3 +20,7 @@ jobs:
         if: contains(github.event.comment.body, '/hello')  # check the comment if it contains the keywords
         run: |
            echo Hello!
+      - name: bob
+        if: contains(github.event.comment.body, '/bob')  # check the comment if it contains the keywords
+        run: |
+           echo Hello Bob!
