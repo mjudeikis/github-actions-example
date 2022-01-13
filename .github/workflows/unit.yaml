@@ -21,9 +21,9 @@ jobs:
         shell: bash
         run: |
           make test-unit-ci
-          make test-unit-coverage
 
           coverage=$(make test-unit-coverage)
+          echo $coverage
 
           echo "::set-output name=coverage::$coverage"
 
