@@ -4,23 +4,10 @@ on:
     types: [created, edited, deleted]
 
 jobs:
- job01:
-   if: contains(github.event.comment.html_url, '/pull/')    # check if the comments come from pull request, exclude those from issue.
+ hello:
+   if: ${{ github.event.issue.pull_request && github.event.comment.body == '/hello'}}    # check if the comments come from pull request, exclude those from issue.
    runs-on: [ubuntu-latest]
    steps:
-      - name: integration
-        if: contains(github.event.comment.body, '/integration')   # check the comment if it contains the keywords
-        shell: bash
-        env:
-          CIRCLECI_TOKEN: ${{ secrets.CIRCLECI_TOKEN }}
-        run: |
-           export CI=true        
-           ./test/trigger-integration.sh
       - name: test
-        if: contains(github.event.comment.body, '/hello')  # check the comment if it contains the keywords
         run: |
            echo Hello!
-      - name: bob
-        if: contains(github.event.comment.body, '/bob')  # check the comment if it contains the keywords
-        run: |
-           echo Hello Bob!
