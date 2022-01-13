@@ -6,7 +6,7 @@ on:
 
 jobs:
   unit:
-    if: ${{ github.event.issue.pull_request }}  # check if the comments come from pull request, exclude those from issue.
+    if: ${{ github.event.issue.pull_request && github.event.comment.body == '/unit'}} 
     runs-on: [ubuntu-latest]
     steps:
       - name: Check out code
