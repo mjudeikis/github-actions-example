@@ -22,6 +22,7 @@ jobs:
         run: |
           make test-unit-ci
           COVERAGE=$(make test-unit-coverage)
+          echo $COVERAGE
       - run: |
           echo "${{env.COVERAGE}}"
           echo $COVERAGE
