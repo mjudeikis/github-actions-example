@@ -1,0 +1,40 @@
+name: unit-tests
+
+on:
+  issue_comment:                                     
+    types: [created, edited, deleted]
+
+jobs:
+  unit:
+    if: ${{ github.event.issue.pull_request }}  # check if the comments come from pull request, exclude those from issue.
+    runs-on: [ubuntu-latest]
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+      - name: Checkout Pull Request
+        run: hub pr checkout ${{ github.event.issue.number }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Diff revision
+        id: coverage
+        shell: bash
+        run: |
+          make test-unit-ci
+          make test-unit-coverage
+
+          coverage=$(make test-unit-coverage)
+
+          echo "::set-output name=coverage::$coverage"
+
+      - name: Auto Comment
+        uses: actions/github-script@v5
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '👋 ${{ steps.coverage.outputs.coverage }}'
+            })
