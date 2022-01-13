@@ -22,15 +22,18 @@ jobs:
         run: |
           make test-unit-ci
 
-          cov=$(make test-unit-coverage)
-          echo $cov
-
-          echo "::set-output name=coverage::$cov"
-
+          make test-unit-coverage >> $COVERAGE
+      - run: |
+          echo "${{env.COVERAGE}}"
+          echo $COVERAGE
       - name: 'Comment PR'
-        uses: actions/github-script@0.3.0
+        uses: actions/github-script@v5
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const { issue: { number: issue_number }, repo: { owner, repo }  } = context;
-            github.issues.createComment({ issue_number, owner, repo, body: 'Hello world ! 👋' });
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `${{env.COVERAGE}}`
+            })
