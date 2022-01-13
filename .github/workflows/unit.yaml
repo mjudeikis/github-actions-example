@@ -23,6 +23,7 @@ jobs:
           make test-unit-ci
           COVERAGE=$(make test-unit-coverage)
           echo $COVERAGE
+          echo "::set-env name=COVERAGE::$COVERAGE"
       - run: |
           echo "${{env.COVERAGE}}"
           echo $COVERAGE
