@@ -22,10 +22,10 @@ jobs:
         run: |
           make test-unit-ci
 
-          coverage=$(make test-unit-coverage)
-          echo $coverage
+          cov=$(make test-unit-coverage)
+          echo $cov
 
-          echo "::set-output name=coverage::$coverage"
+          echo "::set-output name=coverage::$cov"
 
       - name: Create pull-request against master
         uses: octokit/request-action@v2.x
