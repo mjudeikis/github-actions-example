@@ -21,7 +21,7 @@ jobs:
         shell: bash
         run: |
           make test-unit-ci
-
+          COVERAGE="Test coverage: "
           make test-unit-coverage >> $COVERAGE
       - run: |
           echo "${{env.COVERAGE}}"
