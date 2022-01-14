@@ -19,7 +19,7 @@ jobs:
           echo $RELEASE_MESSAGE
       - uses: actions/checkout@v2
         with:
-          repository: mjudeikis/cc_BackendAPI
+          repository: mjudeikis/vuepress-example
           #token: ${{ secrets.my_pat }}
       - name: Create Release
         id: create_release
