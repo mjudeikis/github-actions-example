@@ -22,7 +22,7 @@ jobs:
           #token: ${{ secrets.my_pat }}
       - name: Create Release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN_RELEASE }}
         run: hub release create ${{ env.RELEASE_VERSION }} -m ${{ env.MESSAGE }}
 
 
