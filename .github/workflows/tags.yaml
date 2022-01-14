@@ -9,12 +9,28 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Set env
+      - name: Set release variable 
         run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
-      - name: Test
+      - name: Get release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          MESSAGE=$(hub release show ${{ env.RELEASE_VERSION }})
-          echo $MESSAGE
+          RELEASE_MESSAGE=$(hub release show ${{ env.RELEASE_VERSION }})
+          echo "RELEASE_MESSAGE=${RELEASE_MESSAGE}" >> $GITHUB_ENV
+      - uses: actions/checkout@v2
+        with:
+          repository: mjudeikis/cc_BackendAPI
+          #token: ${{ secrets.my_pat }}
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: mjudeikis/cc_BackendAPI
+          release_name: Release ${{ env.RELEASE_VERSION }}
+          body: |
+            ${{ env.RELEASE_MESSAGE }}
+          draft: false
+          prerelease: false
 
