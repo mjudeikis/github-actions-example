@@ -23,6 +23,6 @@ jobs:
       - name: Create Release
         env:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN_RELEASE }}
-        run: hub release create ${{ env.RELEASE_VERSION }} -m ${{ env.MESSAGE }}
+        run: hub release create ${{ env.RELEASE_VERSION }} -m "${{ env.MESSAGE }}"
 
 
