@@ -21,6 +21,8 @@ jobs:
           repository: mjudeikis/vuepress-example
           #token: ${{ secrets.my_pat }}
       - name: Create Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: hub release create ${{ env.RELEASE_VERSION }} -m ${{ env.MESSAGE }}
 
 
