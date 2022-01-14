@@ -23,7 +23,7 @@ jobs:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
         run: |
           make test-unit-ci
-          COVERAGE=$(go tool cover -func profile.cov | grep total: | awk '{print $$3}')
+          COVERAGE=$(go tool cover -func profile.cov | grep total: | awk '{print $3}')
           echo $COVERAGE
           echo "::set-env name=COVERAGE::$COVERAGE"
       - run: |
