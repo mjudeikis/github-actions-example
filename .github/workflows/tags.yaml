@@ -15,7 +15,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          RELEASE_MESSAGE=$(hub release show ${{ env.RELEASE_VERSION }})
+          RELEASE_MESSAGE=`hub release show ${{ env.RELEASE_VERSION }}`
+          echo $RELEASE_MESSAGE
           echo "RELEASE_MESSAGE=${RELEASE_MESSAGE}" >> $GITHUB_ENV
       - uses: actions/checkout@v2
         with:
