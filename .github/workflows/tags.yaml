@@ -28,8 +28,7 @@ jobs:
         with:
           tag_name: ${{ env.RELEASE_VERSION }}
           release_name: ${{ env.RELEASE_VERSION }}
-          body: |
-            ${{ env.MESSAGE }}
+          body: ${{ env.MESSAGE }}
           draft: false
           prerelease: false
 
